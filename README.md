@@ -35,17 +35,37 @@ Java Database Connectivity (JDBC) es una API que permite a las aplicaciones Java
 A continuación se presentan dos librerías populares en Scala para conectarse a bases de datos relacionales: **Slick** es un marco funcional para trabajar con bases de datos relacionales en Scala. Permite consultas SQL tipo DSL y es adecuado para proyectos que buscan un enfoque más funcional. Soporta transacciones y tiene compatibilidad total con JDBC. **Doobie** es una librería funcional que permite la interacción con bases de datos usando un enfoque puro y seguro. Se basa en el uso de mónadas para manejar efectos secundarios. También soporta transacciones y es totalmente compatible con JDBC.
 
 # SQL
-![SQL](https://github.com/user-attachments/assets/e579150e-4c10-4539-90a6-f0748a16d495)
+```mysql
+CREATE DATABASE test_db_scala;
+
+USE test_db_scala;
+
+CREATE TABLE estudiantes (
+    cedula VARCHAR(20) PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    edad INT
+);
+
+INSERT INTO estudiantes (cedula, nombre, edad) VALUES
+('11086567867', 'Alex', 20),
+('11827483463', 'Julio', 23),
+('11097465432', 'Sofia', 26);
+
+SELECT * FROM estudiantes;
+
+```
+![image](https://github.com/user-attachments/assets/2e5512e6-1925-4f8f-af77-ff51ac91b817)
+
 
 # SCALA
 ``` scala
 import java.sql.{Connection, DriverManager, ResultSet}
 
-object MySQLQuery {
+object conexionSql {
   def main(args: Array[String]): Unit = {
-    val url = "jdbc:mysql://localhost:3306/test_db1"
+    val url = "jdbc:mysql://localhost:3306/test_db_scala"
     val username = "root"
-    val password = "utpl"
+    val password = "ronald"
 
     var connection: Connection = null
 
@@ -55,7 +75,7 @@ object MySQLQuery {
       val resultSet: ResultSet = statement.executeQuery("SELECT * FROM estudiantes")
 
       while (resultSet.next()) {
-        println(s"ID: ${resultSet.getInt("cedula")}, Name: ${resultSet.getString("nombre")}, Email: ${resultSet.getString("edad")}")
+        println(s"Cédula: ${resultSet.getString("cedula")}, Nombre: ${resultSet.getString("nombre")}, Edad: ${resultSet.getInt("edad")}")
       }
     } catch {
       case e: Exception => e.printStackTrace()
@@ -67,6 +87,5 @@ object MySQLQuery {
   }
 }
 ```
-![Scala](https://github.com/user-attachments/assets/99f447a0-68b9-42fa-8764-55a1167ee3a2)
-
+![image](https://github.com/user-attachments/assets/e9e3a141-4de3-4b67-a916-6172125d1ba5)
 
