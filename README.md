@@ -43,19 +43,19 @@ import java.sql.{Connection, DriverManager, ResultSet}
 
 object MySQLQuery {
   def main(args: Array[String]): Unit = {
-    val url = "jdbc:mysql://localhost:3306/test_db"
-    val username = "your_username"
-    val password = "your_password"
+    val url = "jdbc:mysql://localhost:3306/test_db1"
+    val username = "root"
+    val password = "utpl"
 
     var connection: Connection = null
 
     try {
       connection = DriverManager.getConnection(url, username, password)
       val statement = connection.createStatement()
-      val resultSet: ResultSet = statement.executeQuery("SELECT * FROM users")
+      val resultSet: ResultSet = statement.executeQuery("SELECT * FROM estudiantes")
 
       while (resultSet.next()) {
-        println(s"ID: ${resultSet.getInt("id")}, Name: ${resultSet.getString("name")}, Email: ${resultSet.getString("email")}")
+        println(s"ID: ${resultSet.getInt("cedula")}, Name: ${resultSet.getString("nombre")}, Email: ${resultSet.getString("edad")}")
       }
     } catch {
       case e: Exception => e.printStackTrace()
